@@ -1,6 +1,6 @@
 <?php
 
-/**
+/** 使用curl方式发送请求
  * Created by PhpStorm.
  * User: bingone
  * Date: 16/1/19

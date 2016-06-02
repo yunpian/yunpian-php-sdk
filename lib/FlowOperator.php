@@ -1,6 +1,6 @@
 <?php
 
-/**
+/**流量发送方式
  * Created by PhpStorm.
  * User: bingone
  * Date: 16/1/19
@@ -18,11 +18,11 @@ class FlowOperator
         if ($api_secret == null)
             $this->api_secret = $this->yunpian_config['API_SECRET'];
         else
-            $this->api_secret = $apikey;
+            $this->api_secret = $api_secret;
         if ($apikey == null)
             $this->apikey = $this->yunpian_config['APIKEY'];
         else
-            $this->apikey = $api_secret;
+            $this->apikey = $apikey;
     }
 
     public function encrypt(&$data)

@@ -1,6 +1,6 @@
 <?php
 
-/**
+/** 发送结果
  * Created by PhpStorm.
  * User: bingone
  * Date: 16/1/19

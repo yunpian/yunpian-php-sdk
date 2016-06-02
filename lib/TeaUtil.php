@@ -1,5 +1,6 @@
 <?php
 /**
+ * 加密实现，现已废弃
  * Created by PhpStorm.
  * User: bingone
  * Date: 16/1/19

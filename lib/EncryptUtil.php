@@ -1,5 +1,5 @@
 <?php
-/**
+/** 加密工具类
  * Created by PhpStorm.
  * User: bingone
  * Date: 16/1/19

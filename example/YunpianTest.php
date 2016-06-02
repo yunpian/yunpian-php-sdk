@@ -6,25 +6,13 @@
  * Time: 下午4:10
  */
 
-// 1. 首先在 conf/config.php   中配置自己的相关信息
+// 1. 首先在 conf/config.php   中配置自己的apikey
 
 // 返回格式可参考官网:   www.yunpian.com
 // 2. require the file
 require_once '../YunpianAutoload.php';
 
-// 获取用户信息
-$userOperator = new UserOperator();
-$result = $userOperator->get();
-print_r($result);
 
-// 模板
-$tplOperator = new TplOperator();
-$result = $tplOperator->get_default(array("tpl_id"=>'2'));
-print_r($result);
-$result = $tplOperator->get();
-print_r($result);
-$result = $tplOperator->add(array("tpl_content"=>"【bb】大倪#asdf#"));
-print_r($result);
 
 // 发送单条短信
 $smsOperator = new SmsOperator();
@@ -66,5 +54,18 @@ print_r($result);
 // 语音
 $voiceOperator = new VoiceOperator();
 $result = $voiceOperator->send(array("mobile"=>"18700000000","code"=>"1234"));
+print_r($result);
+// 获取用户信息
+$userOperator = new UserOperator();
+$result = $userOperator->get();
+print_r($result);
+
+// 模板
+$tplOperator = new TplOperator();
+$result = $tplOperator->get_default(array("tpl_id"=>'2'));
+print_r($result);
+$result = $tplOperator->get();
+print_r($result);
+$result = $tplOperator->add(array("tpl_content"=>"【bb】大倪#asdf#"));
 print_r($result);
 ?>

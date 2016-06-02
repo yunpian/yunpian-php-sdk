@@ -2,14 +2,13 @@
 /*
  * config file
  */
-//You can get the APIKEY and APISECRET from http://www.yunpian.com/ when log on.
+//You can get the APIKEY from http://www.yunpian.com/ when log on.
 
 $yunpian_config = array();
 $yunpian_config['APIKEY'] = "xxxxxx";
 
 
-// php sdk 暂不支持加密算法
-$yunpian_config['API_SECRET'] = "xxxxxx";
+
 
 
 
@@ -29,6 +28,8 @@ $yunpian_config['VERSION'] = '/v2';
 //$yunpian_config['VERSION'] = '/v2';
 //$yunpian_config['APIKEY'] = "xxxxxx";
 //$yunpian_config['API_SECRET'] = "12345678";
+// php sdk 暂不支持加密算法
+//$yunpian_config['API_SECRET'] = "xxxxxx";
 
 // retry times
 $yunpian_config['RETRY_TIMES'] = 3;
