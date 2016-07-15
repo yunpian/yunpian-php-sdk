@@ -54,11 +54,11 @@ $data['mobile'] = '13300000000';
 $data['text'] = '【云片网】您的验证码是1234';
 $result = $smsOperator->single_send($data);
 print_r($result);
-//发送批量短信
-$data['mobile'] = '13100000000,13100000001,2,13100000003';
-$result = $smsOperator->batch_send($data);
-print_r($result);
-//（这个是个性化接口发送，批量处理可能会产生耗时较长导致并发速度降低，不推荐使用）
+//发送批量短信，批量发送的接口耗时比单号码发送长，如果需要更高并发速度，推荐使用single_send/tpl_single_send
+//$data['mobile'] = '13100000000,13100000001,2,13100000003';
+//$result = $smsOperator->batch_send($data);
+//print_r($result);
+//（这个是个性化接口发送，批量发送的接口耗时比单号码发送长，如果需要更高并发速度，推荐使用single_send/tpl_single_send，不推荐使用）
 //$data['mobile'] = '13000000000,13000000001,1,13000000003';
 //$data['text'] = '【云片网】您的验证码是1234,【云片网】您的验证码是6414,【云片网】您的验证码是0099,【云片网】您的验证码是3451';
 //$result = $smsOperator->multi_send($data);
@@ -79,16 +79,16 @@ print_r($result);
 
 
 // 流量
-$flowOperator = new FlowOperator();
-$result = $flowOperator->get_package();
-print_r($result);
-$result = $flowOperator->recharge(array("sn"=>"1008601","mobile"=>"18700000000"));
-print_r($result);
+//$flowOperator = new FlowOperator();
+//$result = $flowOperator->get_package();
+//print_r($result);
+//$result = $flowOperator->recharge(array("sn"=>"1008601","mobile"=>"18700000000"));
+//print_r($result);
 
 // 语音
-$voiceOperator = new VoiceOperator();
-$result = $voiceOperator->send(array("mobile"=>"18700000000","code"=>"1234"));
-print_r($result);
+//$voiceOperator = new VoiceOperator();
+//$result = $voiceOperator->send(array("mobile"=>"18700000000","code"=>"1234"));
+//print_r($result);
 // 获取用户信息
 $userOperator = new UserOperator();
 $result = $userOperator->get();
