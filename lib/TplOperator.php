@@ -45,8 +45,6 @@ class TplOperator
 
     public function add($data = array())
     {
-        if (!array_key_exists('tpl_id',$data))
-            return new Result(null,$data,null,$error = 'tpl_id 为空');
         if (!array_key_exists('tpl_content',$data))
             return new Result(null,$data,null,$error = 'tpl_content 为空');
         $data['apikey'] = $this->apikey;
