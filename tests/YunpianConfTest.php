@@ -7,15 +7,10 @@ use Yunpian\Sdk\YunpianConf;
 
 final class YunpianConfTest extends TestCase {
     
-    const CONF_TEST = [
-        'yp.user.host' => 'https://test-api.yunpian.com',
-        'yp.sign.host' => 'https://test-api.yunpian.com',
-        'yp.tpl.host' => 'https://test-api.yunpian.com',
-        'yp.sms.host' => 'https://test-api.yunpian.com',
-        'yp.voice.host' => 'https://test-api.yunpian.com',
-        'yp.flow.host' => 'https://test-api.yunpian.com',
-        'yp.call.host' => 'https://test-api.yunpian.com' 
-    ];
+    const CONF_TEST = ['yp.user.host' => 'https://test-api.yunpian.com',
+        'yp.sign.host' => 'https://test-api.yunpian.com','yp.tpl.host' => 'https://test-api.yunpian.com',
+        'yp.sms.host' => 'https://test-api.yunpian.com','yp.voice.host' => 'https://test-api.yunpian.com',
+        'yp.flow.host' => 'https://test-api.yunpian.com','yp.call.host' => 'https://test-api.yunpian.com'];
 
     /**
      * @codeCoverageIgnore

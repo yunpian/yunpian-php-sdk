@@ -15,7 +15,6 @@ trait YunpianGuzzle{
     private $http;
     
     /**
-     * TODO not used
      * http charset
      *
      * @var string
@@ -37,17 +36,13 @@ trait YunpianGuzzle{
 
     protected function httpDefOptions(YunpianConf $conf) {
         return [
-            'headers' => [
-                'Api-Lang' => 'php',
+            'headers' => ['Api-Lang' => 'php',
                 'timeout' => intval($conf->conf(YunpianConstant::HTTP_SO_TIMEOUT, 30)),
-                'connect_timeout' => intval($conf->conf(YunpianConstant::HTTP_SO_TIMEOUT, 10)) 
-            ] 
-        ];
+                'connect_timeout' => intval($conf->conf(YunpianConstant::HTTP_CONN_TIMEOUT, 10))]];
         // 'Content-Type' => 'application/x-www-form-urlencoded'
     }
 
     /**
-     * TODO charset headers
      *
      * @param string $uri            
      * @param array $data            
@@ -57,13 +52,18 @@ trait YunpianGuzzle{
      *            Parsing function for Response, as if toJson
      * @return \Psr\Http\Message\ResponseInterface | mixed
      */
-    function post($uri, array $data, $charset = YunpianConstant::HTTP_CHARSET_DEFAULT, array $headers, $parse = "toJson") {
-        // if (is_null($charset)) {
-        // $charset = $this->charset;
-        // }
-        $rsp = $this->http()->post($uri, [
-            'form_params' => $data 
-        ]);
+    function post($uri, array &$data, $charset = null, array &$headers = [], $parse = "toJson") {
+        if (is_null($charset)) {
+            $charset = $this->charset;
+        }
+        $options = ['debug' => false,'form_params' => $data];
+        if (empty($headers)) {
+            $headers['Content-Type'] = "application/x-www-form-urlencoded;charset=$charset";
+        }
+        $options['_conditional'] = $headers;
+        
+        $rsp = $this->http()->post($uri, $options);
+        var_dump($rsp);
         return is_null($parse) ? $rsp : $this->$parse($rsp);
     }
 

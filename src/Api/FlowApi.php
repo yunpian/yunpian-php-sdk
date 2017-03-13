@@ -2,7 +2,6 @@
 
 namespace Yunpian\Sdk\Api;
 
-use Yunpian\Sdk\Constant\YunpianConstant;
 use Yunpian\Sdk\Model\Result;
 use Yunpian\Sdk\YunpianClient;
 
@@ -13,11 +12,15 @@ use Yunpian\Sdk\YunpianClient;
  */
 class FlowApi extends YunpianApi {
     
-    const NAME = "FlowApi";
+    const NAME = "flow";
 
     function init(YunpianClient $clnt) {
         parent::init($clnt);
         $this->host($clnt->conf(self::YP_FLOW_HOST, 'https://flow.yunpian.com'));
+    }
+
+    function name() {
+        return self::NAME;
     }
 
     /**
@@ -38,29 +41,22 @@ class FlowApi extends YunpianApi {
      * @return Result
      *
      */
-    function get_package(array $param) {
-        static $must = [
-            YunpianConstant::APIKEY 
-        ];
+    function get_package(array $param = []) {
+        static $must = [self::APIKEY];
         $r = $this->verifyParam($param, $must);
-        if (!$r->isSucc())
-            return $r;
-        $v = $this->version;
+        if (!$r->isSucc()) return $r;
+        
+        $v = $this->version();
         $h = new CommonResultHandler(function ($rsp) use ($v) {
             switch ($v) {
-                case YunpianConstant::VERSION_V1:
-                    return $rsp[YunpianConstant::FLOW_PACKAGE];
-                case YunpianConstant::VERSION_V2:
+                case self::VERSION_V1:
+                    return $rsp[self::FLOW_PACKAGE];
+                case self::VERSION_V2:
                     return $rsp;
             }
             return null;
         });
-        try {
-            return $this->path('get_package.json')->post($param, $h, $r);
-        } catch (\Exception $e) {
-            return $h->catchExceptoin($e, $r);
-        }
-        return $r;
+        return $this->path('get_package.json')->post($param, $h, $r);
     }
 
     /**
@@ -92,30 +88,22 @@ class FlowApi extends YunpianApi {
      * @return Result
      *
      */
-    function recharge(array $param) {
-        static $must = [
-            YunpianConstant::APIKEY,
-            YunpianConstant::MOBILE 
-        ];
+    function recharge(array $param = []) {
+        static $must = [self::APIKEY,self::MOBILE];
         $r = $this->verifyParam($param, $must);
-        if (!$r->isSucc())
-            return $r;
-        $v = $this->version;
+        if (!$r->isSucc()) return $r;
+        
+        $v = $this->version();
         $h = new CommonResultHandler(function ($rsp) use ($v) {
             switch ($v) {
-                case YunpianConstant::VERSION_V1:
-                    return $rsp[YunpianConstant::RESULT];
-                case YunpianConstant::VERSION_V2:
+                case self::VERSION_V1:
+                    return $rsp[self::RESULT];
+                case self::VERSION_V2:
                     return $rsp;
             }
             return null;
         });
-        try {
-            return $this->path('recharge.json')->post($param, $h, $r);
-        } catch (\Exception $e) {
-            return $h->catchExceptoin($e, $r);
-        }
-        return $r;
+        return $this->path('recharge.json')->post($param, $h, $r);
     }
 
     /**
@@ -135,29 +123,22 @@ class FlowApi extends YunpianApi {
      * @return Result
      *
      */
-    function pull_status(array $param) {
-        static $must = [
-            YunpianConstant::APIKEY 
-        ];
+    function pull_status(array $param = []) {
+        static $must = [self::APIKEY];
         $r = $this->verifyParam($param, $must);
-        if (!$r->isSucc())
-            return $r;
-        $v = $this->version;
+        if (!$r->isSucc()) return $r;
+        
+        $v = $this->version();
         $h = new CommonResultHandler(function ($rsp) use ($v) {
             switch ($v) {
-                case YunpianConstant::VERSION_V1:
-                    return $rsp[YunpianConstant::FLOW_STATUS];
-                case YunpianConstant::VERSION_V2:
+                case self::VERSION_V1:
+                    return $rsp[self::FLOW_STATUS];
+                case self::VERSION_V2:
                     return $rsp;
             }
             return null;
         });
-        try {
-            return $this->path('pull_status.json')->post($param, $h, $r);
-        } catch (\Exception $e) {
-            return $h->catchExceptoin($e, $r);
-        }
-        return $r;
+        return $this->path('pull_status.json')->post($param, $h, $r);
     }
 
 }

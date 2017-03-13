@@ -34,7 +34,7 @@ class YunpianClient implements Constant\YunpianConstant {
      * @param array $conf            
      * @return \Yunpian\SDK\YunpianClient
      */
-    static function create($apikey, array $conf = null) {
+    static function create($apikey, array $conf = []) {
         $clnt = new YunpianClient();
         $clnt->conf->init()->with($apikey, $conf);
         $clnt->initHttp($clnt->conf); // YunpianGuzzle->initHttp

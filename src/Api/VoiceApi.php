@@ -2,7 +2,6 @@
 
 namespace Yunpian\Sdk\Api;
 
-use Yunpian\Sdk\Constant\YunpianConstant;
 use Yunpian\Sdk\Model\Result;
 use Yunpian\Sdk\YunpianClient;
 
@@ -13,11 +12,15 @@ use Yunpian\Sdk\YunpianClient;
  */
 class VoiceApi extends YunpianApi {
     
-    const NAME = "VoiceApi";
+    const NAME = "voice";
 
     function init(YunpianClient $clnt) {
         parent::init($clnt);
         $this->host($clnt->conf(self::YP_VOICE_HOST, 'https://voice.yunpian.com'));
+    }
+
+    function name() {
+        return self::NAME;
     }
 
     /**
@@ -53,30 +56,21 @@ class VoiceApi extends YunpianApi {
      * @return Result
      */
     function send(array $param) {
-        static $must = [
-            YunpianConstant::APIKEY,
-            YunpianConstant::MOBILE,
-            YunpianConstant::CODE 
-        ];
+        static $must = [self::APIKEY,self::MOBILE,self::CODE];
         $r = $this->verifyParam($param, $must);
-        if (!$r->isSucc())
-            return $r;
-        $v = $this->version;
+        if (!$r->isSucc()) return $r;
+        
+        $v = $this->version();
         $h = new CommonResultHandler(function ($rsp) use ($v) {
             switch ($v) {
-                case YunpianConstant::VERSION_V1:
-                    return $rsp[YunpianConstant::RESULT];
-                case YunpianConstant::VERSION_V2:
+                case self::VERSION_V1:
+                    return $rsp[self::RESULT];
+                case self::VERSION_V2:
                     return $rsp;
             }
             return null;
         });
-        try {
-            return $this->path("send.json")->post($param, $h, $r);
-        } catch (\Exception $e) {
-            return $h->catchExceptoin($e, $r);
-        }
-        return $r;
+        return $this->path("send.json")->post($param, $h, $r);
     }
 
     /**
@@ -96,28 +90,21 @@ class VoiceApi extends YunpianApi {
      * @return Result
      */
     function pull_status(array $param) {
-        static $must = [
-            YunpianConstant::APIKEY 
-        ];
+        static $must = [self::APIKEY];
         $r = $this->verifyParam($param, $must);
-        if (!$r->isSucc())
-            return $r;
-        $v = $this->version;
+        if (!$r->isSucc()) return $r;
+        
+        $v = $this->version();
         $h = new CommonResultHandler(function ($rsp) use ($v) {
             switch ($v) {
-                case YunpianConstant::VERSION_V1:
-                    return $rsp[YunpianConstant::VOICE_STATUS];
-                case YunpianConstant::VERSION_V2:
+                case self::VERSION_V1:
+                    return $rsp[self::VOICE_STATUS];
+                case self::VERSION_V2:
                     return $rsp;
             }
             return null;
         });
-        try {
-            return $this->path("pull_status.json")->post($param, $h, $r);
-        } catch (\Exception $e) {
-            return $h->catchExceptoin($e, $r);
-        }
-        return $r;
+        return $this->path("pull_status.json")->post($param, $h, $r);
     }
 
 }

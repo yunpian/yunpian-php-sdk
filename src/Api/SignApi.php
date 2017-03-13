@@ -2,7 +2,6 @@
 
 namespace Yunpian\Sdk\Api;
 
-use Yunpian\Sdk\Constant\YunpianConstant;
 use Yunpian\Sdk\Model\Result;
 use Yunpian\Sdk\YunpianClient;
 
@@ -13,11 +12,15 @@ use Yunpian\Sdk\YunpianClient;
  */
 class SignApi extends YunpianApi {
     
-    const NAME = "SignApi";
+    const NAME = "sign";
 
     function init(YunpianClient $clnt) {
         parent::init($clnt);
         $this->host($clnt->conf(self::YP_SIGN_HOST, 'https://sms.yunpian.com'));
+    }
+
+    function name() {
+        return self::NAME;
     }
 
     /**
@@ -51,28 +54,20 @@ class SignApi extends YunpianApi {
      *            sign notify apply_vip is_only_global industry_type
      * @return Result
      */
-    function add(array $param) {
-        static $must = [
-            YunpianConstant::APIKEY,
-            YunpianConstant::SIGN 
-        ];
+    function add(array $param = []) {
+        static $must = [self::APIKEY,self::SIGN];
         $r = $this->verifyParam($param, $must);
-        if (!$r->isSucc())
-            return $r;
-        $v = $this->version;
+        if (!$r->isSucc()) return $r;
+        
+        $v = $this->version();
         $h = new CommonResultHandler(function ($rsp) use ($v) {
             switch ($v) {
-                case YunpianConstant::VERSION_V2:
-                    return $rsp[YunpianConstant::SIGN];
+                case self::VERSION_V2:
+                    return $rsp[self::SIGN];
             }
             return null;
         });
-        try {
-            return $this->path('add.json')->post($param, $h, $r);
-        } catch (\Exception $e) {
-            return $h->catchExceptoin($e, $r);
-        }
-        return $r;
+        return $this->path('add.json')->post($param, $h, $r);
     }
 
     /**
@@ -117,27 +112,19 @@ class SignApi extends YunpianApi {
      * @return Result
      */
     function update(array $param) {
-        static $must = [
-            YunpianConstant::APIKEY,
-            YunpianConstant::OLD_SIGN 
-        ];
+        static $must = [self::APIKEY,self::OLD_SIGN];
         $r = $this->verifyParam($param, $must);
-        if (!$r->isSucc())
-            return $r;
-        $v = $this->version;
+        if (!$r->isSucc()) return $r;
+        
+        $v = $this->version();
         $h = new CommonResultHandler(function ($rsp) use ($v) {
             switch ($v) {
-                case YunpianConstant::VERSION_V2:
-                    return $rsp[YunpianConstant::SIGN];
+                case self::VERSION_V2:
+                    return $rsp[self::SIGN];
             }
             return null;
         });
-        try {
-            return $this->path('update.json')->post($param, $h, $r);
-        } catch (\Exception $e) {
-            return $h->catchExceptoin($e, $r);
-        }
-        return $r;
+        return $this->path('update.json')->post($param, $h, $r);
     }
 
     /**
@@ -167,26 +154,19 @@ class SignApi extends YunpianApi {
      * @return Result
      */
     function get(array $param) {
-        static $must = [
-            YunpianConstant::APIKEY 
-        ];
+        static $must = [self::APIKEY];
         $r = $this->verifyParam($param, $must);
-        if (!$r->isSucc())
-            return $r;
-        $v = $this->version;
+        if (!$r->isSucc()) return $r;
+        
+        $v = $this->version();
         $h = new CommonResultHandler(function ($rsp) use ($v) {
             switch ($v) {
-                case YunpianConstant::VERSION_V2:
-                    return $rsp[YunpianConstant::SIGN];
+                case self::VERSION_V2:
+                    return $rsp[self::SIGN];
             }
             return null;
         });
-        try {
-            return $this->path('get.json')->post($param, $h, $r);
-        } catch (\Exception $e) {
-            return $h->catchExceptoin($e, $r);
-        }
-        return $r;
+        return $this->path('get.json')->post($param, $h, $r);
     }
 
 }

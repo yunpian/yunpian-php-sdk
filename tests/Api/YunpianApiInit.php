@@ -5,7 +5,7 @@ namespace Yunpian\Tests\Sdk\Api;
 use Yunpian\Sdk\YunpianClient;
 use Yunpian\Tests\Sdk\YunpianConfTest;
 
-trait YunpianApiInit {
+trait YunpianApiInit{
     
     protected $clnt;
 

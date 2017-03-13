@@ -22,14 +22,12 @@ class YunpianConf implements Constant\YunpianConstant {
      * @param array $conf            
      * @return \Yunpian\Sdk\YunpianConf
      */
-    function with($apikey, array $conf = null) {
-        if (isset($conf))
-            foreach ( $conf as $key => $value ) {
-                $this->conf[$key] = $value;
-            }
+    function with($apikey, array $conf = []) {
+        if (!empty($conf)) foreach ($conf as $key => $value) {
+            $this->conf[$key] = $value;
+        }
         
-        if (isset($apikey))
-            $this->conf[self::YP_APIKEY] = $apikey;
+        if (isset($apikey)) $this->conf[self::YP_APIKEY] = $apikey;
         
         return $this;
     }
@@ -48,7 +46,7 @@ class YunpianConf implements Constant\YunpianConstant {
         }
         
         $yp = parse_ini_file("yunpian.ini");
-        foreach ( $yp as $key => $value ) {
+        foreach ($yp as $key => $value) {
             $this->conf[$key] = $value;
         }
         return $this;
@@ -61,8 +59,7 @@ class YunpianConf implements Constant\YunpianConstant {
      * @return mixed
      */
     function conf($key = null, $defval = null) {
-        if (is_null($key))
-            return $this->conf;
+        if (is_null($key)) return $this->conf;
         $val = $this->conf[$key];
         return is_null($val) ? $defval : $val;
     }

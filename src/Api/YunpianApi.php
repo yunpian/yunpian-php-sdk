@@ -12,7 +12,7 @@ use Yunpian\Sdk\YunpianClient;
  * @author dzh
  * @since 1.0
  */
-class YunpianApi implements YunpianApiResult, YunpianConstant {
+abstract class YunpianApi implements YunpianApiResult, YunpianConstant {
     
     /**
      *
@@ -55,8 +55,7 @@ class YunpianApi implements YunpianApiResult, YunpianConstant {
      * @param YunpianClient $client            
      */
     function init(YunpianClient $clnt) {
-        if (is_null($clnt))
-            return;
+        if (is_null($clnt)) return;
         $this->clnt = $clnt;
         $this->apikey = $clnt->apikey();
         $this->version = $clnt->conf(self::YP_VERSION, self::VERSION_V2);
@@ -65,12 +64,17 @@ class YunpianApi implements YunpianApiResult, YunpianConstant {
 
     /**
      *
+     * @return string
+     */
+    abstract function name();
+
+    /**
+     *
      * @param YunpianClient $client            
      * @return \Yunpian\Sdk\YunpianClient|\Yunpian\Sdk\Api\YuanpianApi
      */
     function client(YunpianClient $clnt = null) {
-        if (is_null($clnt))
-            return $this->clnt;
+        if (is_null($clnt)) return $this->clnt;
         
         $this->clnt = $clnt;
         return $this;
@@ -82,8 +86,7 @@ class YunpianApi implements YunpianApiResult, YunpianConstant {
      * @return string|\Yunpian\Sdk\Api\YuanpianApi
      */
     function host($host = null) {
-        if (is_null($host))
-            return $this->host;
+        if (is_null($host)) return $this->host;
         
         $this->host = $host;
         return $this;
@@ -95,10 +98,9 @@ class YunpianApi implements YunpianApiResult, YunpianConstant {
      * @return \Yunpian\Sdk\YunpianConf|\Yunpian\Sdk\Api\YuanpianApi
      */
     function version($version = null) {
-        if (is_null($version))
-            return $this->version;
+        if (is_null($version)) return $this->version;
         
-        $this->$version = $version;
+        $this->version = $version;
         return $this;
     }
 
@@ -108,10 +110,9 @@ class YunpianApi implements YunpianApiResult, YunpianConstant {
      * @return string|\Yunpian\Sdk\Api\YuanpianApi
      */
     function path($path = null) {
-        if (is_null($path))
-            return $this->path;
+        if (is_null($path)) return $this->path;
         
-        $this->$path = $path;
+        $this->path = $path;
         return $this;
     }
 
@@ -121,10 +122,9 @@ class YunpianApi implements YunpianApiResult, YunpianConstant {
      * @return string|\Yunpian\Sdk\Api\YuanpianApi
      */
     function apikey($apikey = null) {
-        if (is_null($apikey))
-            return $this->apikey;
+        if (is_null($apikey)) return $this->apikey;
         
-        $this->$apikey = $apikey;
+        $this->apikey = $apikey;
         return $this;
     }
 
@@ -134,10 +134,9 @@ class YunpianApi implements YunpianApiResult, YunpianConstant {
      * @return string|\Yunpian\Sdk\Api\YuanpianApi
      */
     function charset($charset = null) {
-        if (is_null($charset))
-            return $this->charset;
+        if (is_null($charset)) return $this->charset;
         
-        $this->$charset = charset;
+        $this->charset = charset;
         return $this;
     }
 
@@ -146,12 +145,23 @@ class YunpianApi implements YunpianApiResult, YunpianConstant {
      * @return string
      */
     function uri() {
-        return "{$this->host}/{$this->version}/{$this->path}";
+        return "{$this->host}/{$this->version}/{$this->name()}/{$this->path}";
     }
 
-    function post(array $param, $h = null) {
-        $rsp = $this->clnt->post($this->uri(), $param);
-        return $this->result($rsp, $h, null);
+    /**
+     *
+     * @param array $param            
+     * @param ResultHandler $h            
+     * @param Result $r            
+     * @return \Yunpian\Sdk\Model\Result|\Yunpian\Sdk\Api\r
+     */
+    function post(array &$param, ResultHandler $h = null, Result $r = null) {
+        try {
+            $rsp = $this->clnt->post($this->uri(), $param);
+            return $this->result($rsp, $h, $r);
+        } catch (Exception $e) {
+            return $h->catchExceptoin($e, $r);
+        }
     }
 
     function result(array $rsp, ResultHandler $h = null, Result $r = null) {
@@ -161,17 +171,13 @@ class YunpianApi implements YunpianApiResult, YunpianConstant {
         if (is_null($r)) {
             $r = new Result();
         }
-        try {
-            $code = $this->code($rsp, $this->version);
-            return code == Code::OK ? $h->succ($code, $rsp, $r) : $h->fail($code, $rsp, $r);
-        } catch (Exception $e) {
-            return $h->catchExceptoin($e, $r);
-        }
+        
+        $code = $this->code($rsp, $this->version);
+        return $code == Code::OK ? $h->succ($code, $rsp, $r) : $h->fail($code, $rsp, $r);
     }
 
-    function code(array $rsp, $version = YunpianConstant::VERSION_V2) {
-        if (is_null($rsp))
-            return Code::OK;
+    function code(array &$rsp, $version = YunpianConstant::VERSION_V2) {
+        if (is_null($rsp)) return Code::OK;
         
         $code = Code::UNKNOWN_EXCEPTION;
         if (is_null($version)) {
@@ -197,7 +203,7 @@ class YunpianApi implements YunpianApiResult, YunpianConstant {
      * @param Result $r            
      * @return Result
      */
-    function verifyParam(array $param, array $must, Result $r = null) {
+    function verifyParam(array &$param, array &$must, Result $r = null) {
         if (is_null($r)) {
             $r = new Result();
         }

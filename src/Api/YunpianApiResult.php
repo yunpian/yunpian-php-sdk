@@ -24,7 +24,7 @@ interface YunpianApiResult {
      * @param string $version            
      * @return number
      */
-    function code(array $rsp, $version);
+    function code(array &$rsp, $version);
 
 }
 
@@ -63,14 +63,27 @@ interface ResultHandler {
 
 class CommonResultHandler implements ResultHandler {
     
-    /**
-     *
-     * @var callable
-     */
     private $data;
 
-    function __construct($data) {
+    function __construct(callable $data) {
         $this->data = $data;
+    }
+
+    function succ($code, array $rsp, $r) {
+        if (is_null($r)) {
+            $r = new Result();
+        }
+        return $r->code($code)->msg(array_key_exists(YunpianConstant::MSG, $rsp) ? $rsp[YunpianConstant::MSG] : null, 
+                true)->data(call_user_func($this->data, $rsp));
+    }
+
+    function fail($code, array $rsp, $r) {
+        if (is_null($r)) {
+            $r = new Result();
+        }
+        return $r->code($code)->msg(array_key_exists(YunpianConstant::MSG, $rsp) ? $rsp[YunpianConstant::MSG] : null, 
+                true)->detail(array_key_exists(YunpianConstant::DETAIL, $rsp) ? $rsp[YunpianConstant::DETAIL] : null, 
+                true);
     }
 
     function catchExceptoin($e, $r) {
@@ -78,20 +91,6 @@ class CommonResultHandler implements ResultHandler {
             $r = new Result();
         }
         return $r->code(Code::UNKNOWN_EXCEPTION)->exception($e, true);
-    }
-
-    function succ($code, array $rsp, $r) {
-        if (is_null($r)) {
-            $r = new Result();
-        }
-        return $r->code($code)->msg($rsp[YunpianConstant::MSG], true)->data($this->data($rsp), true);
-    }
-
-    function fail($code, array $rsp, $r) {
-        if (is_null($r)) {
-            $r = new Result();
-        }
-        return $r->code($code)->msg($rsp[YunpianConstant::MSG], true)->detail($rsp[YunpianConstant::DETAIL], true);
     }
 
 }

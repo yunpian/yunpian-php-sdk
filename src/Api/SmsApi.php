@@ -2,7 +2,6 @@
 
 namespace Yunpian\Sdk\Api;
 
-use Yunpian\Sdk\Constant\YunpianConstant;
 use Yunpian\Sdk\Model\Result;
 use Yunpian\Sdk\YunpianClient;
 
@@ -13,11 +12,15 @@ use Yunpian\Sdk\YunpianClient;
  */
 class SmsApi extends YunpianApi {
     
-    const NAME = "SmsApi";
+    const NAME = "sms";
 
     function init(YunpianClient $clnt) {
         parent::init($clnt);
         $this->host($clnt->conf(self::YP_SMS_HOST, 'https://sms.yunpian.com'));
+    }
+
+    function name() {
+        return self::NAME;
     }
 
     /**
@@ -57,28 +60,19 @@ class SmsApi extends YunpianApi {
      * @return Result
      */
     function send(array $param) {
-        static $must = [
-            YunpianConstant::APIKEY,
-            YunpianConstant::MOBILE,
-            YunpianConstant::TEXT 
-        ];
+        static $must = [self::APIKEY,self::MOBILE,self::TEXT];
         $r = $this->verifyParam($param, $must);
-        if (!$r->isSucc())
-            return $r;
-        $v = $this->version;
+        if (!$r->isSucc()) return $r;
+        
+        $v = $this->version();
         $h = new CommonResultHandler(function ($rsp) use ($v) {
             switch ($v) {
-                case YunpianConstant::VERSION_V1:
-                    return $rsp[YunpianConstant::RESULT];
+                case self::VERSION_V1:
+                    return $rsp[self::RESULT];
             }
             return null;
         });
-        try {
-            return $this->path('send.json')->post($param, $h, $r);
-        } catch (\Exception $e) {
-            return $h->catchExceptoin($e, $r);
-        }
-        return $r;
+        return $this->path('send.json')->post($param, $h, $r);
     }
 
     /**
@@ -117,28 +111,19 @@ class SmsApi extends YunpianApi {
      * @return Result
      */
     function single_send(array $param) {
-        static $must = [
-            YunpianConstant::APIKEY,
-            YunpianConstant::MOBILE,
-            YunpianConstant::TEXT 
-        ];
+        static $must = [self::APIKEY,self::MOBILE,self::TEXT];
         $r = $this->verifyParam($param, $must);
-        if (!$r->isSucc())
-            return $r;
-        $v = $this->version;
+        if (!$r->isSucc()) return $r;
+        
+        $v = $this->version();
         $h = new CommonResultHandler(function ($rsp) use ($v) {
             switch ($v) {
-                case YunpianConstant::VERSION_V2:
+                case self::VERSION_V2:
                     return $rsp;
             }
             return null;
         });
-        try {
-            return $this->path('single_send.json')->post($param, $h, $r);
-        } catch (\Exception $e) {
-            return $h->catchExceptoin($e, $r);
-        }
-        return $r;
+        return $this->path('single_send.json')->post($param, $h, $r);
     }
 
     /**
@@ -174,28 +159,19 @@ class SmsApi extends YunpianApi {
      * @return Result
      */
     function batch_send(array $param) {
-        static $must = [
-            YunpianConstant::APIKEY,
-            YunpianConstant::MOBILE,
-            YunpianConstant::TEXT 
-        ];
+        static $must = [self::APIKEY,self::MOBILE,self::TEXT];
         $r = $this->verifyParam($param, $must);
-        if (!$r->isSucc())
-            return $r;
-        $v = $this->version;
+        if (!$r->isSucc()) return $r;
+        
+        $v = $this->version();
         $h = new CommonResultHandler(function ($rsp) use ($v) {
             switch ($v) {
-                case YunpianConstant::VERSION_V2:
+                case self::VERSION_V2:
                     return $rsp;
             }
             return null;
         });
-        try {
-            return $this->path('batch_send.json')->post($param, $h, $r);
-        } catch (\Exception $e) {
-            return $h->catchExceptoin($e, $r);
-        }
-        return $r;
+        return $this->path('batch_send.json')->post($param, $h, $r);
     }
 
     /**
@@ -235,30 +211,21 @@ class SmsApi extends YunpianApi {
      * @return Result
      */
     function multi_send(array $param) {
-        static $must = [
-            YunpianConstant::APIKEY,
-            YunpianConstant::MOBILE,
-            YunpianConstant::TEXT 
-        ];
+        static $must = [self::APIKEY,self::MOBILE,self::TEXT];
         $r = $this->verifyParam($param, $must);
-        if (!$r->isSucc())
-            return $r;
-        $v = $this->version;
+        if (!$r->isSucc()) return $r;
+        
+        $v = $this->version();
         $h = new CommonResultHandler(function ($rsp) use ($v) {
             switch ($v) {
-                case YunpianConstant::VERSION_V1:
+                case self::VERSION_V1:
                     return $rsp;
-                case YunpianConstant::VERSION_V2:
+                case self::VERSION_V2:
                     return $rsp;
             }
             return null;
         });
-        try {
-            return $this->path('multi_send.json')->post($param, $h, $r);
-        } catch (\Exception $e) {
-            return $h->catchExceptoin($e, $r);
-        }
-        return $r;
+        return $this->path('multi_send.json')->post($param, $h, $r);
     }
 
     /**
@@ -278,28 +245,21 @@ class SmsApi extends YunpianApi {
      * @return Result
      */
     function pull_status(array $param) {
-        static $must = [
-            YunpianConstant::APIKEY 
-        ];
+        static $must = [self::APIKEY];
         $r = $this->verifyParam($param, $must);
-        if (!$r->isSucc())
-            return $r;
-        $v = $this->version;
+        if (!$r->isSucc()) return $r;
+        
+        $v = $this->version();
         $h = new CommonResultHandler(function ($rsp) use ($v) {
             switch ($v) {
-                case YunpianConstant::VERSION_V1:
-                    return $rsp[YunpianConstant::SMS_STATUS];
-                case YunpianConstant::VERSION_V2:
+                case self::VERSION_V1:
+                    return $rsp[self::SMS_STATUS];
+                case self::VERSION_V2:
                     return $rsp;
             }
             return null;
         });
-        try {
-            return $this->path('pull_status.json')->post($param, $h, $r);
-        } catch (\Exception $e) {
-            return $h->catchExceptoin($e, $r);
-        }
-        return $r;
+        return $this->path('pull_status.json')->post($param, $h, $r);
     }
 
     /**
@@ -319,28 +279,21 @@ class SmsApi extends YunpianApi {
      * @return Result
      */
     function pull_reply(array $param) {
-        static $must = [
-            YunpianConstant::APIKEY 
-        ];
+        static $must = [self::APIKEY];
         $r = $this->verifyParam($param, $must);
-        if (!$r->isSucc())
-            return $r;
-        $v = $this->version;
+        if (!$r->isSucc()) return $r;
+        
+        $v = $this->version();
         $h = new CommonResultHandler(function ($rsp) use ($v) {
             switch ($v) {
-                case YunpianConstant::VERSION_V1:
-                    return $rsp[YunpianConstant::SMS_REPLY];
-                case YunpianConstant::VERSION_V2:
+                case self::VERSION_V1:
+                    return $rsp[self::SMS_REPLY];
+                case self::VERSION_V2:
                     return $rsp;
             }
             return null;
         });
-        try {
-            return $this->path('pull_reply.json')->post($param, $h, $r);
-        } catch (\Exception $e) {
-            return $h->catchExceptoin($e, $r);
-        }
-        return $r;
+        return $this->path('pull_reply.json')->post($param, $h, $r);
     }
 
     /**
@@ -378,32 +331,21 @@ class SmsApi extends YunpianApi {
      * @return Result
      */
     function get_reply(array $param) {
-        static $must = [
-            YunpianConstant::APIKEY,
-            YunpianConstant::START_TIME,
-            YunpianConstant::END_TIME,
-            YunpianConstant::PAGE_NUM,
-            YunpianConstant::PAGE_SIZE 
-        ];
+        static $must = [self::APIKEY,self::START_TIME,self::END_TIME,self::PAGE_NUM,self::PAGE_SIZE];
         $r = $this->verifyParam($param, $must);
-        if (!$r->isSucc())
-            return $r;
-        $v = $this->version;
+        if (!$r->isSucc()) return $r;
+        
+        $v = $this->version();
         $h = new CommonResultHandler(function ($rsp) use ($v) {
             switch ($v) {
-                case YunpianConstant::VERSION_V1:
-                    return $rsp[YunpianConstant::SMS_REPLY];
-                case YunpianConstant::VERSION_V2:
+                case self::VERSION_V1:
+                    return $rsp[self::SMS_REPLY];
+                case self::VERSION_V2:
                     return $rsp;
             }
             return null;
         });
-        try {
-            return $this->path('get_reply.json')->post($param, $h, $r);
-        } catch (\Exception $e) {
-            return $h->catchExceptoin($e, $r);
-        }
-        return $r;
+        return $this->path('get_reply.json')->post($param, $h, $r);
     }
 
     /**
@@ -423,29 +365,21 @@ class SmsApi extends YunpianApi {
      * @return Result
      */
     function get_black_word(array $param) {
-        static $must = [
-            YunpianConstant::APIKEY,
-            YunpianConstant::TEXT 
-        ];
+        static $must = [self::APIKEY,self::TEXT];
         $r = $this->verifyParam($param, $must);
-        if (!$r->isSucc())
-            return $r;
-        $v = $this->version;
+        if (!$r->isSucc()) return $r;
+        
+        $v = $this->version();
         $h = new CommonResultHandler(function ($rsp) use ($v) {
             switch ($v) {
-                case YunpianConstant::VERSION_V1:
-                    return $rsp[YunpianConstant::RESULT];
-                case YunpianConstant::VERSION_V2:
+                case self::VERSION_V1:
+                    return $rsp[self::RESULT];
+                case self::VERSION_V2:
                     return $rsp;
             }
             return null;
         });
-        try {
-            return $this->path('get_black_word.json')->post($param, $h, $r);
-        } catch (\Exception $e) {
-            return $h->catchExceptoin($e, $r);
-        }
-        return $r;
+        return $this->path('get_black_word.json')->post($param, $h, $r);
     }
 
     /**
@@ -477,29 +411,21 @@ class SmsApi extends YunpianApi {
      * @return Result
      */
     function get_record(array $param) {
-        static $must = [
-            YunpianConstant::APIKEY,
-            YunpianConstant::START_TIME,
-            YunpianConstant::END_TIME 
-        ];
+        static $must = [self::APIKEY,self::START_TIME,self::END_TIME];
         $r = $this->verifyParam($param, $must);
-        if (!$r->isSucc())
-            return $r;
-        $v = $this->version;
+        if (!$r->isSucc()) return $r;
+        
+        $v = $this->version();
         $h = new CommonResultHandler(function ($rsp) use ($v) {
             switch ($v) {
-                case YunpianConstant::VERSION_V1:
-                    return $rsp[YunpianConstant::SMS];
-                case YunpianConstant::VERSION_V2:
+                case self::VERSION_V1:
+                    return $rsp[self::SMS];
+                case self::VERSION_V2:
                     return $rsp;
             }
             return null;
         });
-        try {
-            return $this->path('get_record.json')->post($param, $h, $r);
-        } catch (\Exception $e) {
-            return $h->catchExceptoin($e, $r);
-        }
+        return $this->path('get_record.json')->post($param, $h, $r);
     }
 
     /**
@@ -531,24 +457,16 @@ class SmsApi extends YunpianApi {
      * @return Result
      */
     function count(array $param) {
-        static $must = [
-            YunpianConstant::APIKEY,
-            YunpianConstant::START_TIME,
-            YunpianConstant::END_TIME 
-        ];
+        static $must = [self::APIKEY,self::START_TIME,self::END_TIME];
         $r = $this->verifyParam($param, $must);
-        if (!$r->isSucc())
-            return $r;
-        $v = $this->version;
+        if (!$r->isSucc()) return $r;
+        
+        $v = $this->version();
         $h = new CommonResultHandler(function ($rsp) use ($v) {
-            $total = $rsp[YunpianConstant::TOTAL];
+            $total = $rsp[self::TOTAL];
             return is_null($total) ? 0 : $total;
         });
-        try {
-            return $this->path('count.json')->post($param, $h, $r);
-        } catch (\Exception $e) {
-            return $h->catchExceptoin($e, $r);
-        }
+        return $this->path('count.json')->post($param, $h, $r);
     }
 
     /**
@@ -587,28 +505,19 @@ class SmsApi extends YunpianApi {
      * @return Result
      */
     function tpl_send(array $param) {
-        static $must = [
-            YunpianConstant::APIKEY,
-            YunpianConstant::MOBILE,
-            YunpianConstant::TPL_ID,
-            YunpianConstant::TPL_VALUE 
-        ];
+        static $must = [self::APIKEY,self::MOBILE,self::TPL_ID,self::TPL_VALUE];
         $r = $this->verifyParam($param, $must);
-        if (!$r->isSucc())
-            return $r;
-        $v = $this->version;
+        if (!$r->isSucc()) return $r;
+        
+        $v = $this->version();
         $h = new CommonResultHandler(function ($rsp) use ($v) {
             switch ($v) {
-                case YunpianConstant::VERSION_V1:
-                    return $rsp[YunpianConstant::RESULT];
+                case self::VERSION_V1:
+                    return $rsp[self::RESULT];
             }
             return null;
         });
-        try {
-            return $this->path('tpl_send.json')->post($param, $h, $r);
-        } catch (\Exception $e) {
-            return $h->catchExceptoin($e, $r);
-        }
+        return $this->path('tpl_send.json')->post($param, $h, $r);
     }
 
     /**
@@ -649,28 +558,19 @@ class SmsApi extends YunpianApi {
      * @return Result
      */
     function tpl_single_send(array $param) {
-        static $must = [
-            YunpianConstant::APIKEY,
-            YunpianConstant::MOBILE,
-            YunpianConstant::TPL_ID,
-            YunpianConstant::TPL_VALUE 
-        ];
+        static $must = [self::APIKEY,self::MOBILE,self::TPL_ID,self::TPL_VALUE];
         $r = $this->verifyParam($param, $must);
-        if (!$r->isSucc())
-            return $r;
-        $v = $this->version;
+        if (!$r->isSucc()) return $r;
+        
+        $v = $this->version();
         $h = new CommonResultHandler(function ($rsp) use ($v) {
             switch ($v) {
-                case YunpianConstant::VERSION_V2:
+                case self::VERSION_V2:
                     return $rsp;
             }
             return null;
         });
-        try {
-            return $this->path('tpl_single_send.json')->post($param, $h, $r);
-        } catch (\Exception $e) {
-            return $h->catchExceptoin($e, $r);
-        }
+        return $this->path('tpl_single_send.json')->post($param, $h, $r);
     }
 
     /**
@@ -711,28 +611,19 @@ class SmsApi extends YunpianApi {
      * @return Result
      */
     function tpl_batch_send(array $param) {
-        static $must = [
-            YunpianConstant::APIKEY,
-            YunpianConstant::MOBILE,
-            YunpianConstant::TPL_ID,
-            YunpianConstant::TPL_VALUE 
-        ];
+        static $must = [self::APIKEY,self::MOBILE,self::TPL_ID,self::TPL_VALUE];
         $r = $this->verifyParam($param, $must);
-        if (!$r->isSucc())
-            return $r;
-        $v = $this->version;
+        if (!$r->isSucc()) return $r;
+        
+        $v = $this->version();
         $h = new CommonResultHandler(function ($rsp) use ($v) {
             switch ($v) {
-                case YunpianConstant::VERSION_V2:
+                case self::VERSION_V2:
                     return $rsp;
             }
             return null;
         });
-        try {
-            return $this->path('tpl_batch_send.json')->post($param, $h, $r);
-        } catch (\Exception $e) {
-            return $h->catchExceptoin($e, $r);
-        }
+        return $this->path('tpl_batch_send.json')->post($param, $h, $r);
     }
 
 }

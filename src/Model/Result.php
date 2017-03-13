@@ -39,12 +39,12 @@ class Result {
     /**
      * json
      *
-     * @var array
+     * @var mixed
      */
     private $data;
 
     function __toString() {
-        return '' . $this->code . '-' . $this->msg . '-' . $this->detail;
+        return "{$this->code}-{$this->msg}-{$this->detail}";
     }
 
     function isSucc() {
@@ -101,12 +101,12 @@ class Result {
      * @param boolean $rr            
      * @return Exception|\Yunpian\Sdk\Model\Result
      */
-    function exception($e, $rr) {
+    function exception($e, $rr = false) {
         if (isset($e) || $rr) {
             $this->e = $e;
             return $this;
         }
-        return $this->$e;
+        return $this->e;
     }
 
     /**
@@ -115,12 +115,12 @@ class Result {
      * @param boolean $rr            
      * @return array|\Yunpian\Sdk\Model\Result
      */
-    function data(array $data, $rr = false) {
+    function data($data, $rr = false) {
         if (isset($data) || $rr) {
             $this->data = $data;
             return $this;
         }
-        return $this->$data;
+        return $this->data;
     }
 
 }

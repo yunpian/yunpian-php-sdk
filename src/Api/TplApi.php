@@ -2,7 +2,6 @@
 
 namespace Yunpian\Sdk\Api;
 
-use Yunpian\Sdk\Constant\YunpianConstant;
 use Yunpian\Sdk\Model\Result;
 use Yunpian\Sdk\YunpianClient;
 
@@ -13,11 +12,15 @@ use Yunpian\Sdk\YunpianClient;
  */
 class TplApi extends YunpianApi {
     
-    const NAME = "TplApi";
+    const NAME = "tpl";
 
     function init(YunpianClient $clnt) {
         parent::init($clnt);
         $this->host($clnt->conf(self::YP_TPL_HOST, 'https://sms.yunpian.com'));
+    }
+
+    function name() {
+        return self::NAME;
     }
 
     /**
@@ -38,26 +41,19 @@ class TplApi extends YunpianApi {
      *
      */
     function get_default(array $param) {
-        static $must = [
-            YunpianConstant::APIKEY 
-        ];
+        static $must = [self::APIKEY];
         $r = $this->verifyParam($param, $must);
-        if (!$r->isSucc())
-            return $r;
-        $v = $this->version;
+        if (!$r->isSucc()) return $r;
+        
+        $v = $this->version();
         $h = new CommonResultHandler(function ($rsp) use ($v) {
             switch ($v) {
-                case YunpianConstant::VERSION_V2:
+                case self::VERSION_V2:
                     return $rsp;
             }
             return null;
         });
-        try {
-            return $this->path("get_default.json")->post($param, $h, $r);
-        } catch (\Exception $e) {
-            return $h->catchExceptoin($e, $r);
-        }
-        return $r;
+        return $this->path("get_default.json")->post($param, $h, $r);
     }
 
     /**
@@ -78,28 +74,21 @@ class TplApi extends YunpianApi {
      * @return Result
      */
     function get(array $param) {
-        static $must = [
-            YunpianConstant::APIKEY 
-        ];
+        static $must = [self::APIKEY];
         $r = $this->verifyParam($param, $must);
-        if (!$r->isSucc())
-            return $r;
-        $v = $this->version;
+        if (!$r->isSucc()) return $r;
+        
+        $v = $this->version();
         $h = new CommonResultHandler(function ($rsp) use ($v) {
             switch ($v) {
-                case YunpianConstant::VERSION_V1:
-                    return $rsp[YunpianConstant::TEMPLATE];
-                case YunpianConstant::VERSION_V2:
+                case self::VERSION_V1:
+                    return $rsp[self::TEMPLATE];
+                case self::VERSION_V2:
                     return $rsp;
             }
             return null;
         });
-        try {
-            return $this->path("get.json")->post($param, $h, $r);
-        } catch (\Exception $e) {
-            return $h->catchExceptoin($e, $r);
-        }
-        return $r;
+        return $this->path("get.json")->post($param, $h, $r);
     }
 
     /**
@@ -127,29 +116,21 @@ class TplApi extends YunpianApi {
      * @return Result
      */
     function add(array $param) {
-        static $must = [
-            YunpianConstant::APIKEY,
-            YunpianConstant::TPL_CONTENT 
-        ];
+        static $must = [self::APIKEY,self::TPL_CONTENT];
         $r = $this->verifyParam($param, $must);
-        if (!$r->isSucc())
-            return $r;
-        $v = $this->version;
+        if (!$r->isSucc()) return $r;
+        
+        $v = $this->version();
         $h = new CommonResultHandler(function ($rsp) use ($v) {
             switch ($v) {
-                case YunpianConstant::VERSION_V1:
-                    return $rsp[YunpianConstant::TEMPLATE];
-                case YunpianConstant::VERSION_V2:
+                case self::VERSION_V1:
+                    return $rsp[self::TEMPLATE];
+                case self::VERSION_V2:
                     return $rsp;
             }
             return null;
         });
-        try {
-            return $this->path("add.json")->post($param, $h, $r);
-        } catch (\Exception $e) {
-            return $h->catchExceptoin($e, $r);
-        }
-        return $r;
+        return $this->path("add.json")->post($param, $h, $r);
     }
 
     /**
@@ -169,28 +150,19 @@ class TplApi extends YunpianApi {
      * @return Result
      */
     function del(array $param) {
-        static $must = [
-            YunpianConstant::APIKEY,
-            YunpianConstant::TPL_ID 
-        ];
+        static $must = [self::APIKEY,self::TPL_ID];
         $r = $this->verifyParam($param, $must);
-        if (!$r->isSucc())
-            return $r;
-        $v = $this->version;
+        if (!$r->isSucc()) return $r;
+        
+        $v = $this->version();
         $h = new CommonResultHandler(function ($rsp) use ($v) {
             switch ($v) {
-                case YunpianConstant::VERSION_V2:
+                case self::VERSION_V2:
                     return $rsp;
             }
             return null;
         });
-        try {
-            return $this->path("del.json")->post($param, $h, $r);
-        } catch (\Exception $e) {
-            return $h->catchExceptoin($e, $r);
-        }
-        return $r;
-    
+        return $this->path("del.json")->post($param, $h, $r);
     }
 
     /**
@@ -223,30 +195,21 @@ class TplApi extends YunpianApi {
      *
      */
     function update(array $param) {
-        static $must = [
-            YunpianConstant::APIKEY,
-            YunpianConstant::TPL_ID,
-            YunpianConstant::TPL_CONTENT 
-        ];
+        static $must = [self::APIKEY,self::TPL_ID,self::TPL_CONTENT];
         $r = $this->verifyParam($param, $must);
-        if (!$r->isSucc())
-            return $r;
-        $v = $this->version;
+        if (!$r->isSucc()) return $r;
+        $v = $this->version();
+        
         $h = new CommonResultHandler(function ($rsp) use ($v) {
             switch ($v) {
-                case YunpianConstant::VERSION_V1:
-                    return $rsp[YunpianConstant::TEMPLATE];
-                case YunpianConstant::VERSION_V2:
-                    return $rsp[YunpianConstant::TEMPLATE];
+                case self::VERSION_V1:
+                    return $rsp[self::TEMPLATE];
+                case self::VERSION_V2:
+                    return $rsp[self::TEMPLATE];
             }
             return null;
         });
-        try {
-            return $this->path("update.json")->post($param, $h, $r);
-        } catch (\Exception $e) {
-            return $h->catchExceptoin($e, $r);
-        }
-        return $r;
+        return $this->path("update.json")->post($param, $h, $r);
     }
 
 }

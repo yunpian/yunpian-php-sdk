@@ -12,11 +12,15 @@ use Yunpian\Sdk\YunpianClient;
  */
 class UserApi extends YunpianApi {
     
-    const NAME = "UserApi";
+    const NAME = "user";
 
     function init(YunpianClient $clnt) {
         parent::init($clnt);
         $this->host($clnt->conf(self::YP_USER_HOST, 'https://sms.yunpian.com'));
+    }
+
+    function name() {
+        return self::NAME;
     }
 
     /**
@@ -33,12 +37,10 @@ class UserApi extends YunpianApi {
      *
      */
     function get($param = []) {
-        static $must = [
-            self::APIKEY 
-        ];
+        static $must = [self::APIKEY];
         $r = $this->verifyParam($param, $must);
-        if (!$r->isSucc())
-            return $r;
+        if (!$r->isSucc()) return $r;
+        
         $v = $this->version();
         $h = new CommonResultHandler(function ($rsp) use ($v) {
             switch ($v) {
@@ -49,12 +51,8 @@ class UserApi extends YunpianApi {
             }
             return null;
         });
-        try {
-            return $this->path('get.json')->post($param, $h, $r);
-        } catch (\Exception $e) {
-            return $h->catchExceptoin($e, $r);
-        }
-        return $r;
+        
+        return $this->path('get.json')->post($param, $h, $r);
     }
 
     /**
@@ -81,14 +79,12 @@ class UserApi extends YunpianApi {
      * @return Result
      *
      */
-    function set(array $param) {
-        static $must = [
-            self::APIKEY 
-        ];
+    function set(array $param = []) {
+        static $must = [self::APIKEY];
         $r = $this->verifyParam($param, $must);
-        if (!$r->isSucc())
-            return $r;
-        $v = $this->version;
+        if (!$r->isSucc()) return $r;
+        
+        $v = $this->version();
         $h = new CommonResultHandler(function ($rsp) use ($v) {
             switch ($v) {
                 case self::VERSION_V2:
@@ -96,12 +92,7 @@ class UserApi extends YunpianApi {
             }
             return null;
         });
-        try {
-            return $this->path("set.json")->post($param, $h, $r);
-        } catch (\Exception $e) {
-            return $h->catchExceptoin($e, $r);
-        }
-        return $r;
+        return $this->path('set.json')->post($param, $h, $r);
     }
 
 }

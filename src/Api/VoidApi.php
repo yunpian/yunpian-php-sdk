@@ -9,6 +9,6 @@ namespace Yunpian\Sdk\Api;
  */
 class VoidApi extends YunpianApi {
     
-    const NAME = "VoidApi";
+    const NAME = "void";
 
 }

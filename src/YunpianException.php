@@ -2,6 +2,13 @@
 
 namespace Yunpian\Sdk;
 
+/**
+ *
+ * @deprecated
+ *
+ * @author dzh
+ * @since 1.0
+ */
 class YunpianException extends \Exception {
 
     public function __construct($message, $code = 0, Exception $previous = null) {

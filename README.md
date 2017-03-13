@@ -4,49 +4,43 @@ yunpian-php-sdk
 
 ## 快速开始
 
-- 添加Maven依赖
+- 添加composer依赖
 
-```xml
-<dependency>
-    <groupId>com.yunpian.sdk</groupId>
-    <artifactId>yunpian-java-sdk</artifactId>
-    <version>1.2.2</version>
-</dependency>
+```json
+"require" : {
+        "yunpian/sdk" : "~1.0"
+    }
 ```
-**注**: master是最新稳定版，可以本地直接构建使用。我们尽快上传到[Maven](http://search.maven.org/#search%7Cga%7C1%7Cyunpian-java-sdk)
+**注**: master是最新稳定版。我们会更新到[Packagist](https://packagist.org/explore/)
 
 - 使用YunpianClient
 
 ```php
-//初始化client,apikey作为所有请求的默认值(可以为空)
-YunpianClient clnt = new YunpianClient("apikey").init();
+use Yunpian\Sdk\YunpianClient;
+
+//初始化client,apikey作为所有请求的默认值
+$clnt = YunpianClient::create($apikey);
 
 //修改账户信息API
-Map<String, String> param = clnt.newParam(3);
-//param.put(APIKEY,"apikey"); 优先级高于构造器apikey
-param.put(YunpianClient.EMERGENCY_CONTACT, "yunpian");
-param.put(YunpianClient.EMERGENCY_MOBILE, "11111111111");
-param.put(YunpianClient.ALARM_BALANCE, "10");
-Result<User> r = clnt.user().set(param);
+$param = [YunpianClient::EMERGENCY_MOBILE => '18616020000']
+$r = $clnt->user()->set($param); // Yunpian\Sdk\Model\Result.php
+var_dump($r);
 
-//账户 clnt.user().* 签名 clnt.sign().* 模版 clnt.tpl().* 短信 clnt.sms().* 语音 clnt.voice().* 流量 clnt.flow().*
-
-//最后释放client
-clnt.close() 
+//账户 $clnt->user() 签名 $clnt->sign() 模版 $clnt->tpl() 短信 $clnt->sms() 语音 $clnt->voice() 流量 $clnt->flow()
 ```
-**注**: v1.2开始使用YunpianClient，做了重新设计，改进性能、扩展性、便利性等。兼容v1.1.*版本，YunpianRestClient暂时保留,请尽快升级。
+**注**: v1.0.0开始使用Yunpian/Sdk/YunpianClient,重构了工程组织。不兼容之前版本，若需要可从github下载分支[20170301_bak](https://github.com/yunpian/yunpian-php-sdk/tree/20170301_bak)
 
 ## 配置说明 (默认配置就行)
-- 默认配置文件 src/main/resources/yunpian.properties
-- 自定义配置方式
-    - 构造器方式，如`new YunpianClient(String apikey, String file)`
-    - 系统属性，如`-Dyp.apikey=apikey -Dyp.file=配置文件路径`
-- apikey的优先级 接口级 > 默认值(YunpianConf.getApikey())
+- 默认配置文件 src/yunpian.ini
+- 构造器配置
+    - `YunpianClient::create($apikey);`
+    - `YunpianClient::create($apikey,$conf);` 
+- apikey的优先级 函数的$param[YunpianConstant::APIKEY] > 构造器的$apikey > 构造器的$conf[YunpianConstant::YP_APIKEY] > yunpian.ini
 
 ## 源码说明 yunpian-php-sdk
 - 工程使用composer构造，php5.6 or higher
-- 开发API可参考单元测试 test/com.yunpian.sdk.api
-- [单元测试](https://phpunit.de/manual/5.7/en/installation.html) `phpunit tests`
+- 开发API可参考单元测试 tests/Api
+- 执行[单元测试](https://phpunit.de/manual/5.7/en/installation.html) `phpunit tests`
 
 ## 联系我们
 [云片支持 QQ](https://static.meiqia.com/dist/standalone.html?eid=30951&groupid=0d20ab23ab4702939552b3f81978012f&metadata={"name":"github"})
