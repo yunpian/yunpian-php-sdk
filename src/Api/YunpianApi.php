@@ -158,7 +158,6 @@ abstract class YunpianApi implements YunpianApiResult, YunpianConstant {
     function post(array &$param, ResultHandler $h = null, Result $r = null) {
         try {
             $rsp = $this->clnt->post($this->uri(), $param);
-            var_dump($rsp);
             return $this->result($rsp, $h, $r);
         } catch (Exception $e) {
             return $h->catchExceptoin($e, $r);
