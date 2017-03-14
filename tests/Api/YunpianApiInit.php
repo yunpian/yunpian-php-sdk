@@ -10,9 +10,8 @@ trait YunpianApiInit{
     protected $clnt;
 
     function setUp() {
-        $apikey = 'bc3c4f272d8e39c53695f9d3feb7e9c6';
+        $apikey = '';
         $this->clnt = YunpianClient::create($apikey, YunpianConfTest::CONF_TEST);
-        // print $this->clnt;
     }
 
     function tearDown() {
