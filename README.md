@@ -8,7 +8,7 @@ yunpian-php-sdk
 
 ```json
 "require" : {
-        "yunpian/sdk" : "~1.0"
+        "yunpian/yunpian-php-sdk" : "~1.0"
     }
 ```
 **注**: master是最新稳定版。我们会更新到[Packagist](https://packagist.org/explore/)
@@ -28,7 +28,7 @@ $clnt = YunpianClient::create($apikey);
 
 //账户 $clnt->user() 签名 $clnt->sign() 模版 $clnt->tpl() 短信 $clnt->sms() 语音 $clnt->voice() 流量 $clnt->flow()
 ```
-**注**: v1.0.0开始使用Yunpian/Sdk/YunpianClient,重构了工程组织。不兼容之前版本，若需要可从github下载分支[20170301_bak](https://github.com/yunpian/yunpian-php-sdk/tree/20170301_bak)
+**注**: v1.0开始使用composer管理工程。不兼容之前版本，若需要可从github下载分支[20170301_bak](https://github.com/yunpian/yunpian-php-sdk/tree/20170301_bak)
 
 ## 配置说明 (默认配置就行)
 - 默认配置文件 src/yunpian.ini
@@ -40,7 +40,7 @@ $clnt = YunpianClient::create($apikey);
 ## 源码说明 yunpian-php-sdk
 - 工程使用composer构造，php5.6 or higher
 - 开发API可参考单元测试 tests/Api
-- 执行[单元测试](https://phpunit.de/manual/5.7/en/installation.html) `phpunit tests`
+- 执行单元测试 `phpunit tests`，安装[phpunit](https://phpunit.de/manual/5.7/en/installation.html)
 
 ## 联系我们
 [云片支持 QQ](https://static.meiqia.com/dist/standalone.html?eid=30951&groupid=0d20ab23ab4702939552b3f81978012f&metadata={"name":"github"})
