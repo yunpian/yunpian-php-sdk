@@ -1,0 +1,42 @@
+{
+	"name" : "yunpian/yunpian-php-sdk",
+	"description" : "Yunpian PHP SDK",
+	"keywords" : [
+		"yunpian",
+		"sdk"
+	],
+	"license" : "MIT",
+	"require" : {
+		"php" : ">=5.6.0",
+		"guzzlehttp/guzzle" : "~6.0"
+	},
+	"config" : {
+		"preferred-install" : "dist"
+	},
+	"homepage" : "https://github.com/yunpian/yunpian-php-sdk",
+	"support" : {
+		"issues" : "https://github.com/yunpian/yunpian-php-sdk/issues",
+		"wiki" : "https://github.com/yunpian/yunpian-php-sdk/wiki",
+		"source" : "https://github.com/yunpian/yunpian-php-sdk"
+	},
+	"require-dev" : {
+		"phpunit/phpunit" : "~5.7"
+	},
+	"authors" : [{
+			"name" : "dzh",
+			"email" : "daizhong@yunpian.com",
+			"role" : "Developer"
+		}
+	],
+	"type" : "library",
+	"autoload" : {
+		"psr-4" : {
+			"Yunpian\\Sdk\\" : "src"
+		}
+	},
+	"autoload-dev" : {
+		"psr-4" : {
+			"Yunpian\\Tests\\Sdk\\" : "tests"
+		}
+	}
+}
