@@ -6,6 +6,11 @@ use \Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Client;
 use Yunpian\Sdk\Constant\YunpianConstant;
 
+/**
+ *
+ * @author dzh
+ * @since 1.0
+ */
 trait YunpianGuzzle{
     
     /**
@@ -62,8 +67,11 @@ trait YunpianGuzzle{
         }
         $options['_conditional'] = $headers;
         
-        $rsp = $this->http()->post($uri, $options);
-        var_dump($rsp);
+        try {
+            $rsp = $this->http()->post($uri, $options);
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            $rsp = $e->getResponse();
+        }
         return is_null($parse) ? $rsp : $this->$parse($rsp);
     }
 
