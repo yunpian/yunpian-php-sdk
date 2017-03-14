@@ -28,7 +28,7 @@ $clnt = YunpianClient::create($apikey);
 
 //账户 $clnt->user() 签名 $clnt->sign() 模版 $clnt->tpl() 短信 $clnt->sms() 语音 $clnt->voice() 流量 $clnt->flow()
 ```
-**注**: v1.0开始使用composer管理工程。不兼容之前版本，若需要可从github下载分支[20170301_bak](https://github.com/yunpian/yunpian-php-sdk/tree/20170301_bak)
+**注**: v1.0开始使用composer管理工程。不兼容之前版本，若需要可从github下载[0.0.1](https://github.com/yunpian/yunpian-php-sdk/releases/tag/0.0.1)
 
 ## 配置说明 (默认配置就行)
 - 默认配置文件 src/yunpian.ini
