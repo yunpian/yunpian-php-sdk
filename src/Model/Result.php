@@ -57,7 +57,7 @@ class Result {
      * @param boolean $rr            
      * @return number|\Yunpian\Sdk\Model\Result
      */
-    function code($code, $rr = false) {
+    function code($code = null, $rr = false) {
         if (isset($code) || $rr) {
             $this->code = $code;
             return $this;
@@ -72,7 +72,7 @@ class Result {
      *            force to return $this
      * @return string|\Yunpian\Sdk\Model\Result
      */
-    function msg($msg, $rr = false) {
+    function msg($msg = null, $rr = false) {
         if (isset($msg) || $rr) {
             $this->msg = $msg;
             return $this;
@@ -87,7 +87,7 @@ class Result {
      *            force to return $this
      * @return string|\Yunpian\Sdk\Model\Result
      */
-    function detail($detail, $rr = false) {
+    function detail($detail = null, $rr = false) {
         if (isset($detail) || $rr) {
             $this->detail = $detail;
             return $this;
@@ -101,7 +101,7 @@ class Result {
      * @param boolean $rr            
      * @return Exception|\Yunpian\Sdk\Model\Result
      */
-    function exception($e, $rr = false) {
+    function exception($e = null, $rr = false) {
         if (isset($e) || $rr) {
             $this->e = $e;
             return $this;
@@ -115,7 +115,7 @@ class Result {
      * @param boolean $rr            
      * @return array|\Yunpian\Sdk\Model\Result
      */
-    function data($data, $rr = false) {
+    function data($data = null, $rr = false) {
         if (isset($data) || $rr) {
             $this->data = $data;
             return $this;

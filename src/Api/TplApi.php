@@ -7,7 +7,7 @@ use Yunpian\Sdk\YunpianClient;
 
 /**
  * https://www.yunpian.com/api2.0/tpl.html
- * 
+ *
  * @author dzh
  * @since 1.0
  */
@@ -206,7 +206,7 @@ class TplApi extends YunpianApi {
                 case self::VERSION_V1:
                     return $rsp[self::TEMPLATE];
                 case self::VERSION_V2:
-                    return $rsp[self::TEMPLATE];
+                    return array_key_exists(self::TEMPLATE, $rsp) ? $rsp[self::TEMPLATE] : $rsp;
             }
             return null;
         });
