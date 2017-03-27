@@ -17,7 +17,7 @@ class VoiceApiTest extends TestCase {
         // var_dump($clnt->voice()->version(YunpianConstant::VERSION_V1)->send($param));
     }
 
-    function test_pull_status() {
+    function _test_pull_status() {
         $clnt = $this->clnt;
         $param = [YunpianConstant::PAGE_SIZE => '20'];
         var_dump($clnt->voice()->pull_status($param));
