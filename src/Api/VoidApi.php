@@ -11,4 +11,8 @@ class VoidApi extends YunpianApi {
     
     const NAME = "void";
 
+    function name() {
+        return self::NAME;
+    }
+
 }
