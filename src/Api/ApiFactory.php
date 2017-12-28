@@ -8,7 +8,7 @@ namespace Yunpian\Sdk\Api;
  * @since 1.0
  */
 class ApiFactory {
-    
+
     private $clnt;
 
     function __construct($clnt) {
@@ -36,10 +36,13 @@ class ApiFactory {
             case VoiceApi::NAME:
                 $api = new VoiceApi();
                 break;
+            case VideoSmsApi::NAME:
+                $api = new VideoSmsApi();
+                break;
             default:
                 $api = new VoidApi();
         }
-        
+
         $api->init($this->clnt);
         return $api;
     }

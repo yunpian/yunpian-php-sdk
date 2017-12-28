@@ -11,31 +11,31 @@ use Yunpian\Sdk\Constant\Code;
  * @since 1.0
  */
 class Result {
-    
+
     /**
      *
      * @var int
      */
     private $code = Code::OK;
-    
+
     /**
      *
      * @var string
      */
     private $msg;
-    
+
     /**
      *
      * @var string
      */
     private $detail;
-    
+
     /**
      *
      * @var \Exception
      */
     private $e;
-    
+
     /**
      * json
      *
@@ -53,9 +53,9 @@ class Result {
 
     /**
      *
-     * @param number $code            
-     * @param boolean $rr            
-     * @return number|\Yunpian\Sdk\Model\Result
+     * @param number $code
+     * @param boolean $rr
+     * @return number|\Yunpian\Sdk\Model\Resulot
      */
     function code($code = null, $rr = false) {
         if (isset($code) || $rr) {
@@ -67,7 +67,7 @@ class Result {
 
     /**
      *
-     * @param string $msg            
+     * @param string $msg
      * @param boolean $rr
      *            force to return $this
      * @return string|\Yunpian\Sdk\Model\Result
@@ -82,7 +82,7 @@ class Result {
 
     /**
      *
-     * @param string $detail            
+     * @param string $detail
      * @param boolean $rr
      *            force to return $this
      * @return string|\Yunpian\Sdk\Model\Result
@@ -97,8 +97,8 @@ class Result {
 
     /**
      *
-     * @param string $e            
-     * @param boolean $rr            
+     * @param string $e
+     * @param boolean $rr
      * @return Exception|\Yunpian\Sdk\Model\Result
      */
     function exception($e = null, $rr = false) {
@@ -111,8 +111,8 @@ class Result {
 
     /**
      *
-     * @param array $data            
-     * @param boolean $rr            
+     * @param array $data
+     * @param boolean $rr
      * @return array|\Yunpian\Sdk\Model\Result
      */
     function data($data = null, $rr = false) {
