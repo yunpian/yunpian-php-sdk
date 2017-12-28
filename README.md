@@ -7,7 +7,7 @@ yunpian-php-sdk
 - 添加composer依赖
 
 ```json
-"require" : {
+"require": {
         "yunpian/yunpian-php-sdk" : "~1.0"
     }
 ```
@@ -23,9 +23,12 @@ $clnt = YunpianClient::create($apikey);
 
 $param = [YunpianClient::MOBILE => '18616020000',YunpianClient::TEXT => '【云片网】您的验证码是1234'];
 $r = $clnt->sms()->single_send($param);
-var_dump($r);
+//var_dump($r);
+if($r->isSucc()){
+    //$r->data()
+}
 
-//账户 $clnt->user() 签名 $clnt->sign() 模版 $clnt->tpl() 短信 $clnt->sms() 语音 $clnt->voice() 流量 $clnt->flow()
+//账户$clnt->user() 签名$clnt->sign() 模版$clnt->tpl() 短信$clnt->sms() 语音$clnt->voice() 流量$clnt->flow() 视频短信$clnt->vsms()
 ```
 **注**: v1.0开始使用composer管理工程。不兼容之前版本，若需要可从github下载[0.0.1](https://github.com/yunpian/yunpian-php-sdk/releases/tag/0.0.1)
 
