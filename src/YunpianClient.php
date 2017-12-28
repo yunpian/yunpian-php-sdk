@@ -2,6 +2,8 @@
 
 namespace Yunpian\Sdk;
 
+use Yunpian\Sdk\Api\VideoSmsApi;
+
 /**
  *
  * @author dzh
@@ -9,13 +11,13 @@ namespace Yunpian\Sdk;
  */
 class YunpianClient implements Constant\YunpianConstant {
     use YunpianGuzzle;
-    
+
     /**
      *
      * @var ApiFactory
      */
     private $api;
-    
+
     /**
      *
      * @var YunpianConf
@@ -30,8 +32,8 @@ class YunpianClient implements Constant\YunpianConstant {
     /**
      * Initialize/Create YunpianClient
      *
-     * @param string $apikey            
-     * @param array $conf            
+     * @param string $apikey
+     * @param array $conf
      * @return \Yunpian\SDK\YunpianClient
      */
     static function create($apikey, array $conf = []) {
@@ -43,7 +45,7 @@ class YunpianClient implements Constant\YunpianConstant {
 
     /**
      *
-     * @param string $name            
+     * @param string $name
      * @return \Yunpian\Sdk\Api\YunpianApi
      */
     private function api($name) {
@@ -56,6 +58,14 @@ class YunpianClient implements Constant\YunpianConstant {
      */
     function sms() {
         return $this->api(Api\SmsApi::NAME);
+    }
+
+    /**
+     *
+     * @return VideoSmsApi
+     */
+    function vsms() {
+        return $this->api(Api\VideoSmsApi::NAME);
     }
 
     /**
