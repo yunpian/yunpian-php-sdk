@@ -45,7 +45,7 @@ if($r->isSucc()){
 - 执行单元测试 `phpunit tests`，安装[phpunit](https://phpunit.de/manual/5.7/en/installation.html)
 
 ## 视频教程
-[使用视频教程](https://deqing.b0.upaiyun.com/yunpian/video/yunpiannbhd.mp4)     
+[使用视频教程](http://oss-standard.oss-cn-hangzhou.aliyuncs.com/yunpian/app/apiweb/yunpianphp.mp4)     
 
 ## 联系我们
 [云片支持 QQ](https://static.meiqia.com/dist/standalone.html?eid=30951&groupid=0d20ab23ab4702939552b3f81978012f&metadata={"name":"github"})
